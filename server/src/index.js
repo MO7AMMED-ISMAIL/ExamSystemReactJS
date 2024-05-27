@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const upload = require('./controllers/imageUpload');
 const studentRoutes = require('./routes/studentRoutes');
-
+const subjectRoutes = require('./routes/subjectRoutes');
+const loginRoutes = require('./routes/loginRoutes');
 
 
 const app = express();
@@ -12,7 +13,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(upload);
 
 //routes 
+app.use("/api",loginRoutes);
 app.use("/api",studentRoutes);
+app.use("/api",subjectRoutes);
 
 app.use((request, response) => {
     response.status(404).json({ data: "Not Found" });

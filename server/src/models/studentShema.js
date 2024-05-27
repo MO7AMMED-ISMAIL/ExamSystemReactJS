@@ -26,6 +26,10 @@ const studentSchema = new Schema({
     age: {
         type: Number,
         min: 0
+    },
+    role:{
+        type: String,
+        default: 'student'
     }
 });
 

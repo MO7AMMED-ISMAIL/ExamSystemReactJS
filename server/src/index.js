@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 const upload = require('./controllers/imageUpload');
 const studentRoutes = require('./routes/studentRoutes');
@@ -12,6 +13,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(upload);
 
+app.use(cors({
+    origin: 'http://localhost:3000', 
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, 
+  }));
+
+  
 //routes 
 app.use("/api",loginRoutes);
 app.use("/api",studentRoutes);
@@ -25,7 +33,7 @@ app.use((error, request, response, next) => {
     response.status(500).json({ data: `Error MW ${error}` });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 const dbUrl = process.env.MONGODB_URI ;
 mongoose.connect(dbUrl, {})
     .then(() => {

@@ -3,7 +3,7 @@ const express = require('express');
 
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 const dbUrl = process.env.MONGODB_URI ;
 module.exports = mongoose.connect(dbUrl, {})
     .then(() => {

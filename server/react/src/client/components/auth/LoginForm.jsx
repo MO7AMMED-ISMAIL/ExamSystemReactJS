@@ -10,7 +10,7 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { status, error } = useSelector((state) => state.auth);
+  const { status} = useSelector((state) => state.auth);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,6 +22,10 @@ const LoginForm = () => {
       navigate('/');
     }
   }, [status]);
+  
+  if (status === 'loading') {
+    return <Loader />;
+  }
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 vw-100">
@@ -52,7 +56,6 @@ const LoginForm = () => {
                   required
                 />
               </div>
-              {status === 'loading' && <Loader />}
               {status === 'failed' && (
                 <div className="text-center text-danger">
                  <span>

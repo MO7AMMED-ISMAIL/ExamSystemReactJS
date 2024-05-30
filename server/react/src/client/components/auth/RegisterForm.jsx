@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector  } from 'react-redux';
 import { registerUser } from '../../slices/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import './AuthForm.css';
+import Loader from '../../layouts/Loader';
 
 export default function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ export default function RegisterForm() {
     age: ''
   });
   const [errors, setErrors] = useState({});
+  const { status} = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -56,6 +58,10 @@ export default function RegisterForm() {
       });
     }
   };
+
+  if (status === 'loading') {
+    return <Loader />;
+  }
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">

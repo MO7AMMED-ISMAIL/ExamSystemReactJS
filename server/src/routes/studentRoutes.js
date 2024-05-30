@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const {isAdmin,canUpdateData} = require("../midelware/authorized")
 
 
 const studentController = require("../controllers/StudentContoller");
@@ -14,13 +14,13 @@ const {
 
 
 router.route("/students")
-    .get(studentController.getAllStudents)
-    .post(insertValidator, resultValidator,studentController.createStudent)
-    .put(updateValidator, resultValidator,studentController.updateStudent);
+    .get(isAdmin,studentController.getAllStudents)
+    .post(isAdmin,insertValidator, resultValidator,studentController.createStudent)
+    .put(canUpdateData,updateValidator, resultValidator,studentController.updateStudent);
 
 router.route("/students/:id")
-    .get(getValidator, resultValidator,studentController.getStudent)
-    .delete(deleteValidator, resultValidator,studentController.deleteStudent);
+    .get(canUpdateData,getValidator, resultValidator,studentController.getStudent)
+    .delete(isAdmin,deleteValidator, resultValidator,studentController.deleteStudent);
 
 
 module.exports = router;

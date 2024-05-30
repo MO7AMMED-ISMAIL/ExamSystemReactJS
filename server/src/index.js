@@ -6,6 +6,8 @@ const upload = require('./controllers/imageUpload');
 const studentRoutes = require('./routes/studentRoutes');
 const subjectRoutes = require('./routes/subjectRoutes');
 const loginRoutes = require('./routes/loginRoutes');
+const authorized = require('./midelware/authorized')
+const examRoutes = require('./routes/examRoutes');
 
 
 const app = express();
@@ -17,13 +19,15 @@ app.use(cors({
     origin: 'http://localhost:3000', 
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, 
-  }));
+}));
 
-  
+
 //routes 
 app.use("/api",loginRoutes);
+app.use(authorized)
 app.use("/api",studentRoutes);
 app.use("/api",subjectRoutes);
+app.use("/api",examRoutes);
 
 app.use((request, response) => {
     response.status(404).json({ data: "Not Found" });

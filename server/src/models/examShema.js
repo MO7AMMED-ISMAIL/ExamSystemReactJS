@@ -13,8 +13,7 @@ const examSchema = new Schema({
     date: { type: Date, required: true },
     duration: { type: Number, required: true }, 
     questions: [questionSchema], 
-    student: { type: mongoose.Schema.Types.ObjectId, ref: 'Student' },
-    exam: { type: mongoose.Schema.Types.ObjectId, ref: 'Exam' }
+    subject: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' },
 });
 
 const Exam = mongoose.model('Exam', examSchema);

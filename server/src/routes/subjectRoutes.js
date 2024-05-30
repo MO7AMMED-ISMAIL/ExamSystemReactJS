@@ -8,17 +8,17 @@ const {
     deleteSubjectValidator,
 } = require('../midelware/subject/subjectValidator');
 
-
 const subjectController = require('../controllers/SubjectCintroller');
+const {isAdmin,isStudent,canUpdateData} = require('../midelware/authorized');
 
 
 router.route("/subjects")
     .get(subjectController.getAllSubjects)
-    .post(createSubjectValidator,resultValidator,subjectController.createSubject)
+    .post(isAdmin,createSubjectValidator,resultValidator,subjectController.createSubject)
 
 router.route("/subjects/:id")
     .get(subjectController.getSubject)
-    .put(updateSubjectValidator,resultValidator,subjectController.updateSubject)
-    .delete(deleteSubjectValidator,resultValidator,subjectController.deleteSubject);
+    .put(isAdmin,updateSubjectValidator,resultValidator,subjectController.updateSubject)
+    .delete(isAdmin,deleteSubjectValidator,resultValidator,subjectController.deleteSubject);
 
 module.exports = router;

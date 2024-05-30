@@ -1,0 +1,258 @@
+{
+    "examName": "Midterm Exam",
+    "description": "Midterm exam for the Introduction to Programming course",
+    "date": "2024-06-15",
+    "duration": 120,
+    "questions": [
+        {
+            "questionText": "What is the output of the following code?",
+            "options": [
+                "1",
+                "2",
+                "3",
+                "4"
+            ],
+            "correctAnswer": "2"
+        },
+        {
+            "questionText": "Which of the following is a valid JavaScript variable name?",
+            "options": [
+                "_myVariable",
+                "1_myVariable",
+                "my-variable",
+                "my variable"
+            ],
+            "correctAnswer": "_myVariable"
+        },
+        {
+            "questionText": "What is the purpose of the `map()` method in JavaScript?",
+            "options": [
+                "To filter an array",
+                "To transform each element of an array",
+                "To reduce an array to a single value",
+                "To sort an array"
+            ],
+            "correctAnswer": "To transform each element of an array"
+        },
+        {
+            "questionText": "What is the difference between `let` and `var` in JavaScript?",
+            "options": [
+                "`let` is block-scoped, `var` is function-scoped",
+                "`let` is function-scoped, `var` is global-scoped",
+                "`let` is global-scoped, `var` is block-scoped",
+                "There is no difference between `let` and `var`"
+            ],
+            "correctAnswer": "`let` is block-scoped, `var` is function-scoped"
+        },
+        {
+            "questionText": "What is the purpose of the `reduce()` method in JavaScript?",
+            "options": [
+                "To filter an array",
+                "To transform each element of an array",
+                "To reduce an array to a single value",
+                "To sort an array"
+            ],
+            "correctAnswer": "To reduce an array to a single value"
+        },
+        {
+            "questionText": "What is the output of the following code?",
+            "options": [
+                "1",
+                "2",
+                "3",
+                "4"
+            ],
+            "correctAnswer": "3"
+        },
+        {
+            "questionText": "What is the purpose of the `slice()` method in JavaScript?",
+            "options": [
+                "To remove elements from an array",
+                "To add elements to an array",
+                "To create a new array with a subset of the original array",
+                "To reverse the order of an array"
+            ],
+            "correctAnswer": "To create a new array with a subset of the original array"
+        },
+        {
+            "questionText": "What is the purpose of the `forEach()` method in JavaScript?",
+            "options": [
+                "To filter an array",
+                "To transform each element of an array",
+                "To reduce an array to a single value",
+                "To execute a function for each element of an array"
+            ],
+            "correctAnswer": "To execute a function for each element of an array"
+        },
+        {
+            "questionText": "What is the output of the following code?",
+            "options": [
+                "1",
+                "2",
+                "3",
+                "4"
+            ],
+            "correctAnswer": "1"
+        },
+        {
+            "questionText": "What is the purpose of the `find()` method in JavaScript?",
+            "options": [
+                "To filter an array",
+                "To transform each element of an array",
+                "To find the first element in an array that satisfies a condition",
+                "To reduce an array to a single value"
+            ],
+            "correctAnswer": "To find the first element in an array that satisfies a condition"
+        }
+    ],
+    "subject": "6654ddf985743af0dbe63f73"
+}
+
+
+
+
+-----------------------------------------------------------------------------------------------------
+
+{
+  "examName": "Programming Exam",
+  "description": "Exam for Programming subject",
+  "date": "2024-06-01",
+  "duration": 60,
+  "questions": [
+    {
+      "questionText": "What is the output of the following code?",
+      "options": ["A", "B", "C", "D"],
+      "correctAnswer": "C"
+    },
+    {
+      "questionText": "Which data structure is best for implementing a queue?",
+      "options": ["Array", "Linked List", "Stack", "Hash Table"],
+      "correctAnswer": "Linked List"
+    },
+    {
+      "questionText": "What is the time complexity of binary search?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctAnswer": "O(log n)"
+    },
+    {
+      "questionText": "Which sorting algorithm has the best average-case time complexity?",
+      "options": ["Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort"],
+      "correctAnswer": "Quick Sort"
+    },
+    {
+      "questionText": "What is the purpose of the 'this' keyword in JavaScript?",
+      "options": ["To refer to the current object", "To refer to the global object", "To refer to the parent object", "To refer to the window object"],
+      "correctAnswer": "To refer to the current object"
+    },
+    {
+      "questionText": "What is the output of the following code?",
+      "options": ["1", "2", "3", "4"],
+      "correctAnswer": "2"
+    },
+    {
+      "questionText": "What is the purpose of the 'const' keyword in JavaScript?",
+      "options": ["To declare a constant variable", "To declare a function", "To declare a class", "To declare an object"],
+      "correctAnswer": "To declare a constant variable"
+    },
+    {
+      "questionText": "What is the difference between 'let' and 'var' in JavaScript?",
+      "options": ["There is no difference", "Let has block scope, var has function scope", "Var can be hoisted, let cannot", "Let is for variables, var is for constants"],
+      "correctAnswer": "Let has block scope, var has function scope"
+    },
+    {
+      "questionText": "What is the purpose of the 'async' keyword in JavaScript?",
+      "options": ["To declare an asynchronous function", "To declare a synchronous function", "To declare a generator function", "To declare a recursive function"],
+      "correctAnswer": "To declare an asynchronous function"
+    },
+    {
+      "questionText": "What is the purpose of the 'await' keyword in JavaScript?",
+      "options": ["To wait for a Promise to resolve", "To declare a variable", "To declare a function", "To declare a loop"],
+      "correctAnswer": "To wait for a Promise to resolve"
+    }
+  ],
+  "subject": "6654ddf985743af0dbe63f73"
+}
+
+
+
+--------------------------------------------------------------------------------------------------------------------
+{
+  "examName": "Data Structures Exam",
+  "description": "Exam for Data Structures subject",
+  "date": "2024-06-15",
+  "duration": 90,
+  "questions": [
+    {
+      "questionText": "What is the time complexity of inserting an element at the beginning of a singly linked list?",
+      "options": ["O(1)", "O(n)", "O(log n)", "O(n log n)"],
+      "correctAnswer": "O(1)"
+    },
+    {
+      "questionText": "What is the purpose of a hash table?",
+      "options": ["To store key-value pairs", "To store arrays", "To store trees", "To store graphs"],
+      "correctAnswer": "To store key-value pairs"
+    },
+    {
+      "questionText": "What is the purpose of a binary search tree?",
+      "options": ["To store sorted data", "To store unsorted data", "To store hierarchical data", "To store linear data"],
+      "correctAnswer": "To store sorted data"
+    },
+    {
+      "questionText": "What is the time complexity of finding an element in a binary search tree?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctAnswer": "O(log n)"
+    },
+    {
+      "questionText": "What is the purpose of a stack?",
+      "options": ["To store data in a Last-In-First-Out (LIFO) manner", "To store data in a First-In-First-Out (FIFO) manner", "To store data in a sorted manner", "To store data in a hierarchical manner"],
+      "correctAnswer": "To store data in a Last-In-First-Out (LIFO) manner"
+    },
+    {
+      "questionText": "What is the time complexity of pushing an element to a stack?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctAnswer": "O(1)"
+    },
+    {
+      "questionText": "What is the purpose of a queue?",
+      "options": ["To store data in a Last-In-First-Out (LIFO) manner", "To store data in a First-In-First-Out (FIFO) manner", "To store data in a sorted manner", "To store data in a hierarchical manner"],
+      "correctAnswer": "To store data in a First-In-First-Out (FIFO) manner"
+    },
+    {
+      "questionText": "What is the time complexity of enqueuing an element to a queue?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctAnswer": "O(1)"
+    },
+    {
+      "questionText": "What is the purpose of a graph?",
+      "options": ["To store data in a linear manner", "To store data in a hierarchical manner", "To store data in a connected manner", "To store data in a sorted manner"],
+      "correctAnswer": "To store data in a connected manner"
+    },
+    {
+      "questionText": "What is the time complexity of performing a depth-first search (DFS) on a graph?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n + m)"],
+      "correctAnswer": "O(n + m)"
+    }
+  ],
+  "subject": "6654f518d1a5a62aff82b02b"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

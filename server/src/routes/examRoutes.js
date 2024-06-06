@@ -16,5 +16,6 @@ router.route("/exams")
 
 router.route("/exams/:id")
     .get(All,getExamByIdValidator,resultValdation,examController.startExam)
+    
 
 module.exports = router;

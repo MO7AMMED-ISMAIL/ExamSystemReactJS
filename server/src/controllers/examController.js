@@ -13,14 +13,14 @@ exports.getAllExams = async (req, res, next) => {
 
 exports.createExams= async (req , res , next)=>{
     try {
-        const { examName, description, date, duration, questions, student } = req.body;
+        const { examName, description, date, duration, questions , subject } = req.body;
         const newExam = new Exam({
             examName,
             description,
             date,
             duration,
             questions,
-            student
+            subject
         });
         const savedExam = await newExam.save();
         res.status(201).json({ message: 'Exam created successfully', data: savedExam });
@@ -28,6 +28,18 @@ exports.createExams= async (req , res , next)=>{
         next(err);
     }
 }
+
+exports.getExamById = async (req, res, next) => {
+    try {
+        const exam = await Exam.findById(req.params.id).populate('subject');
+        if (!exam) {
+            return res.status(404).json({ message: 'Exam not found' });
+        }
+        return res.status(200).json({ success: true, data: exam });
+    } catch (err) {
+        next(err);
+    }
+};
 
 exports.startExam = async (req, res, next) => {
     try {

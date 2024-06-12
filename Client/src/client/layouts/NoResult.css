@@ -1,0 +1,56 @@
+.sad-face {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: rgb(29, 236, 95);
+    margin: 50px auto;
+  }
+  
+  .eyes {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .eye {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgb(3, 62, 33);
+    border-radius: 50%;
+    background-color: white;
+    position: absolute;
+  }
+  
+  .left {
+    left: 25%;
+  }
+  
+  .right {
+    right: 25%;
+  }
+  
+  .mouth {
+    width: 50px;
+    height: 20px;
+    background-color: rgb(246, 234, 234);
+    border: 2px solid rgb(3, 62, 33);
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50% / 100% 100% 0 0; 
+    animation: mouthAnimation 1s infinite alternate;
+  }
+  
+  @keyframes mouthAnimation {
+    from {
+      height: 20px;
+    }
+    to {
+      height: 30px;
+    }
+  }
+  

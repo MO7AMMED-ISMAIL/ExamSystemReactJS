@@ -1,0 +1,24 @@
+#canvas {
+    border: 2px solid #024916;
+    background-color: rgba(8, 217, 88, 0.766);
+    transform-style: preserve-3d;
+    animation: rotate 15s infinite linear;
+    
+}
+
+@keyframes rotate {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+aside  {
+ display: flex;
+ align-items: center;
+ padding-left: 20px;
+ flex-wrap: wrap;
+
+}

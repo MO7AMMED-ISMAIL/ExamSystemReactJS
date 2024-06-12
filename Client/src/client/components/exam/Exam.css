@@ -1,0 +1,58 @@
+.exam-container aside:nth-child(1){
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.exam-container aside:nth-child(2){
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  
+}
+
+.exam-container header{
+  background-color: rgb(217, 250, 215);
+  box-shadow: 0 6px 8px rgba(189, 223, 138, 0.51);
+  box-shadow: inset 0 12px 12px -12px rgb(5, 115, 11),  
+              inset 0 -12px 12px -12px rgb(5, 115, 11);
+}
+
+.exam-container content {
+  display: flex;
+  flex-direction: column;
+ padding-top:4%;
+}
+
+.exam-container section{
+  box-shadow: 0 8px 10px rgba(13, 211, 23, 0.8);
+}
+
+.exam-container section aside{
+ 
+  min-height:83vh;
+}
+.exam-container img{
+ 
+  min-height:60vh;
+}
+
+button{
+   min-width:15%;
+  background: #00b09b;
+background: -webkit-linear-gradient(to right, #96c93d, #00b09b); 
+background: linear-gradient(to right, #96c93d, #00b09b); 
+}
+
+button:hover{
+ 
+  background: #038374; 
+background: -webkit-linear-gradient(to right, #5b8612, #056e62); 
+background: linear-gradient(to right, #7aaa26, #047a6d); 
+}
+
+
+
+

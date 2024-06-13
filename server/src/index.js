@@ -8,6 +8,7 @@ const subjectRoutes = require('./routes/subjectRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const authorized = require('./midelware/authorized')
 const examRoutes = require('./routes/examRoutes');
+const degreeRoutes = require('./routes/degreeRoutes'); 
 
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(authorized)
 app.use("/api",studentRoutes);
 app.use("/api",subjectRoutes);
 app.use("/api",examRoutes);
+app.use("/api",degreeRoutes);
 
 app.use((request, response) => {
     response.status(404).json({ data: "Not Found" });

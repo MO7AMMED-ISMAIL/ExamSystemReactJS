@@ -33,7 +33,7 @@ const SubjectsList = () => {
 
       <header>
         <section className="row">
-          <p className="col-12">Check available exams for subjects</p>
+          <p className="col-12 display-6">Check available exams for subjects</p>
         </section>
       </header>
 

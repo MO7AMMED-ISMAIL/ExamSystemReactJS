@@ -22,7 +22,8 @@ header > section {
 
 header > section > p {
   animation: slide 15s linear infinite;
-  font-size: 2.5em;
+font-family: Arial, Helvetica, sans-serif;
+padding-top: 10px;
 }
 
 @keyframes slide {
@@ -127,14 +128,17 @@ article >section {
 article >section >p {
   background-color: rgba(128, 244, 190, 0.462);
  display: flex;
+ flex-wrap: wrap;
  justify-content: center;
  align-items: center;
  box-shadow: 0 6px 8px rgba(127, 224, 132, 0.51);
  border: 2px green solid ;
  border-radius: 20px;
- min-width:20vw;
+ min-width:23vw;
  gap:10px;
- min-height:7vh;
+ min-height:10vh;
+ padding: 15px;
+ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   
 }
 

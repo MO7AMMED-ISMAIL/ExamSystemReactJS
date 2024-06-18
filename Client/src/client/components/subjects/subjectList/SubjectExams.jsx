@@ -21,7 +21,7 @@ const SubjectExams = () => {
 
   if (status === 'failed') {
   
-   return <NoResult header={"No Result"} />;
+   return <NoResult header={"No Available Exams"} />;
   
   }
 
@@ -30,19 +30,19 @@ const SubjectExams = () => {
 
       <header>
         <section className='row' >
-      <h2 className='col-12 text-center'>Available Exams</h2>
+      <h1 className='col-12 text-center text-success'>Available Exams</h1>
       </section>
       </header>
 
 
     <article className='row'>
-       <section className="col-6">
+       <section className="col-7">
         {exams.map((exam) => (
           <>
-          <p  class="col-3" key={exam._id}>{exam.examName}
+          <p  className="col-3 h5" key={exam._id}>{exam.examName}
           <Link
           to={`/exam/${exam._id}`}
-          className='text-decoration-none btn btn-success btn-sm  '>
+          className='text-decoration-none btn btn-success btn-sm h5 '>
            Start
           </Link>
           </p>
@@ -52,7 +52,7 @@ const SubjectExams = () => {
        </section>
 
 
-      <aside className='col-5 offset-1'>
+      <aside className='col-4 offset-1'>
 
       <div>
          <img

@@ -25,7 +25,7 @@ export default function ExamContainer({ exam, currentQuestionIndex, isAnswerCorr
 
                 <aside className='col-9 offset-1'>
                     <h2 className='text-center col-12'>{exam.examName}</h2>
-                    <p className='text-center col-12'>{exam.description}</p>
+                    <p className='text-center col-12 text-success'>{exam.description}</p>
                 </aside>
 
                 <aside className='col-1 offset-1'>

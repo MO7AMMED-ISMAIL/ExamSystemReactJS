@@ -28,8 +28,12 @@ const Navbar = () => {
                 </li>
                 <li className="nav-item dropdown me-3 me-lg-0">
                     <a className="nav-link dropdown-toggle" href="!" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span className="mr-2 d-none d-lg-inline text-gray-600 small">Ahmed Elbalouty</span>
-                        <img className="rounded-circle" src="img/ahmd.jpg" width="20px" height="20px" alt="User Avatar" />
+                        <span className="mr-2 d-none d-lg-inline text-gray-600 small">
+                            {
+                                localStorage.getItem('name')
+                            }
+                        </span>
+                        <img className="rounded-circle" src={localStorage.getItem('image')} width="20px" height="20px" alt="User Avatar" />
                     </a>
                     <ul className="dropdown-menu">
                         <li><a className="dropdown-item" href="!"><i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile</a></li>

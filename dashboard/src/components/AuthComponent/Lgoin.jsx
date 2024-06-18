@@ -17,6 +17,9 @@ export default function Lgoin() {
             localStorage.setItem('role', result.payload.role);
             localStorage.setItem('expirationTime',result.payload.expirationTime);
             localStorage.setItem('id',result.payload.id);
+            localStorage.setItem('name',result.payload.name);
+            localStorage.setItem('email',result.payload.email);
+            localStorage.setItem('image',result.payload.image);
             navigate('/home');
         }).catch((err) => {
             console.log(error);

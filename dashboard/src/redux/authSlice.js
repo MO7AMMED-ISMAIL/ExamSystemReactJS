@@ -12,7 +12,10 @@ export const login = createAsyncThunk('auth/login',
             const decodedToken = jwtDecode(token);
             const expirationTime = decodedToken.exp * 1000;
             const id = decodedToken.id;
-            return {token, role: response.data.role, expirationTime,id};
+            const adminEmail = decodedToken.email;
+            const name = decodedToken.name;
+            const image = decodedToken.image;
+            return {token, image, role: response.data.role, expirationTime,id,email: adminEmail,name};
         }catch(error){
             return rejectWithValue("Email or password is incorrect");
         }

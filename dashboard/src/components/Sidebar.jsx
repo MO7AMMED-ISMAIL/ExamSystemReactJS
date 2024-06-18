@@ -32,7 +32,7 @@ const Sidebar = () => {
             <div className="d-flex">
                 {/* <FontAwesomeIcon icon={faBook} className="fa-solid me-2" /> */}
                 <span>
-                <h6 className="mt-1 mb-0">Cafateria</h6>
+                <h6 className="mt-1 mb-0">Exam System</h6>
                 </span>
             </div>
         </div>

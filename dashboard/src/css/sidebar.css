@@ -1,0 +1,10 @@
+html, body {
+    height: 100%;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#sidebar{
+    width: 20vw;
+    color: white;
+    height: 100vh;
+}

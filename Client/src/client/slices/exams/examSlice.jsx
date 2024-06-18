@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {fetchExamsById} from '../../api/examApi';
 
+
 export const fetchExams = createAsyncThunk(
     'exams/fetchExams',
     async (subjectId) => {
@@ -8,6 +9,7 @@ export const fetchExams = createAsyncThunk(
         return response; 
     }
 );
+
 
 const examsSlice = createSlice({
     name: 'exams',

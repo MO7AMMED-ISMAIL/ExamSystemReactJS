@@ -32,6 +32,7 @@ exports.login = async(req,res,next)=>{
                 message:'Login successful',
                 token,
                 role:student.role,
+                id: student._id
             })
         }
     }catch(error){

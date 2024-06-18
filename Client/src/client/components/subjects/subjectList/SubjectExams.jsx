@@ -13,7 +13,7 @@ const SubjectExams = () => {
 
   useEffect(() => {
     dispatch(fetchExams(subjectId));
-  }, [dispatch, subjectId]);
+  }, [subjectId]);
 
   if (status === 'loading') {
     return <Loader />;
@@ -21,7 +21,7 @@ const SubjectExams = () => {
 
   if (status === 'failed') {
   
-   return <NoResult></NoResult>;
+   return <NoResult header={"No Result"} />;
   
   }
 

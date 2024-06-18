@@ -27,12 +27,12 @@
 }
 
 .exam-container section{
-  box-shadow: 0 8px 10px rgba(13, 211, 23, 0.8);
+  box-shadow: 0 8px 14px rgba(13, 211, 23, 0.8);
 }
 
 .exam-container section aside{
  
-  min-height:83vh;
+  height:82vh;
 }
 .exam-container img{
  
@@ -41,18 +41,27 @@
 
 button{
    min-width:15%;
+   min-height:10vh;
   background: #00b09b;
-background: -webkit-linear-gradient(to right, #96c93d, #00b09b); 
-background: linear-gradient(to right, #96c93d, #00b09b); 
+  background: -webkit-linear-gradient(to right, #96c93d, #00b09b); 
+  background: linear-gradient(to right, #96c93d, #00b09b); 
 }
 
 button:hover{
- 
   background: #038374; 
-background: -webkit-linear-gradient(to right, #5b8612, #056e62); 
-background: linear-gradient(to right, #7aaa26, #047a6d); 
+  background: -webkit-linear-gradient(to right, #5b8612, #056e62); 
+  background: linear-gradient(to right, #7aaa26, #047a6d); 
 }
 
+
+.examCompleted{
+  box-shadow: 0 8px 14px rgba(71, 118, 74, 0.8);
+  margin-top: 13%;
+  background-color: #adfca4;
+  width: 80vw;
+  margin-left:9%;
+  padding: 15px;
+}
 
 
 

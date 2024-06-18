@@ -1,7 +1,7 @@
 import React from 'react';
 import './NoResult.css'; 
 
-const NoResult = () => {
+const NoResult = ({header}) => {
     return (
         <>
         <div className="sad-face">
@@ -13,7 +13,7 @@ const NoResult = () => {
         </div>
 
         <div>
-      <h1 className='text-center'>No Available Exams</h1>
+      <h1 className='text-center'>{header}</h1>
         </div>
         </>
       );

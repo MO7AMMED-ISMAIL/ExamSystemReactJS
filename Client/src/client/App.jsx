@@ -14,6 +14,7 @@ const SubjectExams = lazy(() => import('./components/subjects/subjectList/Subjec
 
 
 export default function App() {
+  
   const routes = createRoutesFromElements(
     <>
       <Route path="/" element={<Navigate to="/subject" />} />
@@ -30,6 +31,7 @@ export default function App() {
             </Suspense>
           }
         />
+
          <Route
           path="/subjects/:subjectId"
           element={
@@ -38,6 +40,7 @@ export default function App() {
             </Suspense>
           }
         />
+
         <Route
           path="/exam/:examId"
           element={

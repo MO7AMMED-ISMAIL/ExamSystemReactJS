@@ -37,7 +37,7 @@
 
 .exam-container section aside{
  
-  height:82vh;
+  min-height:82vh;
 }
 .exam-container img{
  

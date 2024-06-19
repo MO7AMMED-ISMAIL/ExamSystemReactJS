@@ -36,22 +36,16 @@ function AllStudent() {
                     </thead>
                     <tbody>
                         {
-                            students.map((student) => {
+                            students.map((student,index) => {
+
                                 if (student.role !== 'admin') {
                                     return (
                                         <tr key={student._id}>
-                                            <td>{student._id}</td>
+                                            <td>{index + 1}</td>
                                             <td>{student.name}</td>
                                             <td>{student.email}</td>
                                             <td>{student.age}</td>
                                             <td><img className='rounded-circle' src={student.image} alt="" style={{width: '50px', height: '50px'}}/></td>
-                                            <td>
-                                                <div className='d-flex'>
-                                                    <a href='!' className='btn btn-primary ms-2'>Add</a>
-                                                    <a href='!' className='btn btn-warning ms-2'>Edit</a>
-                                                    <a href='!' className='btn btn-danger ms-2'>delete</a>
-                                                </div>
-                                            </td>
                                         </tr>
                                     );
                                 } else {

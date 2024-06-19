@@ -23,6 +23,24 @@ export const login = createAsyncThunk('auth/login',
 );
 
 
+export const updateProfile = createAsyncThunk('auth/update',
+    async (formData,ThunkAPI) => {
+        const {rejectWithValue} = ThunkAPI;
+        try{
+            const response = await axios.put('http://localhost:8000/api/students', formData,{
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            return response.data;
+        }catch(error){
+            rejectWithValue(error.response.data);
+        }
+    }
+)
+
+
 
 const authSlice = createSlice({
     name: 'auth',
@@ -54,7 +72,18 @@ const authSlice = createSlice({
         .addCase(login.rejected, (state, action) => {
             state.status = 'failed';
             state.error = action.payload;
-        });
+        })
+        //update Profile
+        .addCase(updateProfile.pending, (state) => {
+            state.status = 'loading';
+        })
+        .addCase(updateProfile.fulfilled, (state, action) => {
+            state.status = 'succeeded';
+        })
+        .addCase(updateProfile.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.payload;
+        })
     }
 });
 

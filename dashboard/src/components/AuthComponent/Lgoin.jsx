@@ -13,14 +13,16 @@ export default function Lgoin() {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(login({ email, password })).then((result) => {
-            localStorage.setItem('token', result.payload.token);
-            localStorage.setItem('role', result.payload.role);
-            localStorage.setItem('expirationTime',result.payload.expirationTime);
-            localStorage.setItem('id',result.payload.id);
-            localStorage.setItem('name',result.payload.name);
-            localStorage.setItem('email',result.payload.email);
-            localStorage.setItem('image',result.payload.image);
-            navigate('/home');
+            if(result.payload.success === true){
+                localStorage.setItem('token', result.payload.token);
+                localStorage.setItem('role', result.payload.role);
+                localStorage.setItem('expirationTime',result.payload.expirationTime);
+                localStorage.setItem('id',result.payload.id);
+                localStorage.setItem('name',result.payload.name);
+                localStorage.setItem('email',result.payload.email);
+                localStorage.setItem('image',result.payload.image);
+                navigate('/home');
+            }
         }).catch((err) => {
             console.log(error);
         });

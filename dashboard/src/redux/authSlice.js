@@ -17,7 +17,7 @@ export const login = createAsyncThunk('auth/login',
             const image = decodedToken.image;
             return {token, image, role: response.data.role, expirationTime,id,email: adminEmail,name};
         }catch(error){
-            return rejectWithValue("Email or password is incorrect");
+            return rejectWithValue(error.message);
         }
     }
 );

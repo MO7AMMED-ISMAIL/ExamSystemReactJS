@@ -20,7 +20,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (status === 'succeeded') {
-      navigate('/');
+      navigate('/subject');
     }
   }, [status, navigate]);
   
@@ -60,7 +60,7 @@ const LoginForm = () => {
               )}
               
               <div className="text-center my-5">
-                <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={status === 'loading'}>
+                <button type="submit" className="btn btn-success btn-lg btn-block col-12 " disabled={status === 'loading'}>
                   Login
                 </button>
                 <div className='my-3'>

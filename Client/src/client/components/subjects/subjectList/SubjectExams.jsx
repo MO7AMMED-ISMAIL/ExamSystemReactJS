@@ -36,18 +36,20 @@ const SubjectExams = () => {
 
 
     <article className='row'>
+
        <section className="col-7">
         {exams.map((exam) => (
-          <>
-          <p  className="col-3 h5" key={exam._id}>{exam.examName}
+          <div key={exam._id}>
+
+          <p  className="col-3 h5" >{exam.examName}
           <Link
           to={`/exam/${exam._id}`}
-          className='text-decoration-none btn btn-success btn-sm h5 '>
+          className='text-decoration-none btn btn-success my-2 h5 '>
            Start
           </Link>
           </p>
          
-          </>
+          </div>
         ))}
        </section>
 

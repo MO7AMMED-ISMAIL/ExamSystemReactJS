@@ -8,13 +8,15 @@ export default function Lgoin() {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { status, error } = useSelector((state) => state.auth)
+    const { status, error } = useSelector((state) => state.auth);
+    const [AuthError , setAuthError] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(login({ email, password })).then((result) => {
-            if(result.payload.success === true){
-                localStorage.setItem('token', result.payload.token);
+            console.log(result);
+            if(result.payload.success === true && result.payload.role === 'admin'){
+                localStorage.setItem('token',result.payload.token);
                 localStorage.setItem('role', result.payload.role);
                 localStorage.setItem('expirationTime',result.payload.expirationTime);
                 localStorage.setItem('id',result.payload.id);
@@ -22,9 +24,12 @@ export default function Lgoin() {
                 localStorage.setItem('email',result.payload.email);
                 localStorage.setItem('image',result.payload.image);
                 navigate('/home');
+            }else{
+                setAuthError('You are not admin');
+                navigate('/login');
             }
         }).catch((err) => {
-            console.log(error);
+            console.log(err);
         });
     };
 
@@ -46,6 +51,7 @@ export default function Lgoin() {
                         </form>
                         {status === 'loading' && <div className="spinner-border text-primary" role="status"></div>}
                         {status === 'failed' && <p className='alert alert-danger text-center mt-2'>{error}</p>}
+                        {AuthError && <p className='alert alert-danger text-center mt-2'>{AuthError}</p>}
                     </div>
                 </div>
             </div>

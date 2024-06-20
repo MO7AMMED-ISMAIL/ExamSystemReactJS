@@ -50,7 +50,7 @@ const Canvas = () => {
     }, []);
 
     return (
-       <aside className='row'>
+        <aside className='row'>
             <canvas  className='col-12'  ref={canvasRef} id="canvas" width="500" height="400"></canvas>
         </aside>
     );

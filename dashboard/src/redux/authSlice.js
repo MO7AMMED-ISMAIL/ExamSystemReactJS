@@ -15,9 +15,9 @@ export const login = createAsyncThunk('auth/login',
             const adminEmail = decodedToken.email;
             const name = decodedToken.name;
             const image = decodedToken.image;
-            return {token, image, role: response.data.role, expirationTime,id,email: adminEmail,name};
+            return {token, image, role: response.data.role, expirationTime,id,email: adminEmail,name,success: true};
         }catch(error){
-            return rejectWithValue(error.message);
+            return rejectWithValue(error.response.data.data);
         }
     }
 );
@@ -71,7 +71,7 @@ const authSlice = createSlice({
         })
         .addCase(login.rejected, (state, action) => {
             state.status = 'failed';
-            state.error = action.payload;
+            state.error = action.error.message;
         })
         //update Profile
         .addCase(updateProfile.pending, (state) => {

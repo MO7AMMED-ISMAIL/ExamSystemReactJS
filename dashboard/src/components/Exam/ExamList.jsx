@@ -11,7 +11,7 @@ export function ExamList() {
     const status = useSelector((state) => state.exams.status);
     const error = useSelector((state) => state.exams.error);
     const [currentPage, setCurrentPage] = useState(1);
-    const examsPerPage = 4;
+    const examsPerPage = 20;
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [deletingExamId, setDeletingExamId] = useState(null);
 
@@ -27,10 +27,8 @@ export function ExamList() {
     const totalPages = Math.ceil(exams.length / examsPerPage);
 
     useEffect(() => {
-        if (status === "idle") {
-            dispatch(fetchExams({ page: currentPage, limit: examsPerPage }));
-        }
-    }, [dispatch, status, currentPage]);
+        dispatch(fetchExams({ page: currentPage, limit: examsPerPage }));
+    }, [dispatch, currentPage]);
 
     const handleDelete = (examId) => {
         dispatch(deleteExam(examId));
@@ -58,6 +56,12 @@ export function ExamList() {
         return <Error />;
     }
 
+    if (status === "loading") {
+        return <div className="row justify-content-center align-content-center">
+                    <div className="spinner-border text-primary tex-center my-5" role="status"></div>
+                </div>;
+    }
+
     return (
         <div className="mx- mt-5">
             <div className="row justify-content-center align-items-center">
@@ -66,7 +70,7 @@ export function ExamList() {
                         <div className="card-header py-3">
                             <div className="row justify-content-between align-items-center">
                                 <h4 className="col text-muted">Our Exams</h4>
-                                <div className="col-2 text-center">
+                                <div className="col-auto text-center">
                                     <Link to="/exams/0/edit" className="btn btn-outline-primary">
                                         Add New Exam
                                     </Link>
@@ -74,7 +78,11 @@ export function ExamList() {
                             </div>
                         </div>
                         <div className="card-body">
-                            {status === "loading" && <div>Loading...</div>}
+                            {status === 'loading' &&
+                                <div className="row justify-content-center align-content-center">
+                                    <div className="spinner-border text-primary tex-center my-5" role="status"></div>
+                                </div>
+                            }
                             {status === "failed" && <div>Error: {error}</div>}
                             {status === "succeeded" && (
                                 <>

@@ -11,7 +11,7 @@ export function SubjectList() {
     const status = useSelector((state) => state.subjects.status);
     const error = useSelector((state) => state.subjects.error);
     const [currentPage, setCurrentPage] = useState(1);
-    const subjectsPerPage = 4;
+    const subjectsPerPage = 20;
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [deletingSubjectId, setDeletingSubjectId] = useState(null);
 
@@ -58,6 +58,12 @@ export function SubjectList() {
         return <Error />;
     }
 
+    if (status === "loading") {
+        return <div className="row justify-content-center align-content-center">
+            <div className="spinner-border text-primary tex-center my-5" role="status"></div>
+        </div>;
+    }
+
     return (
         <div className="mx- mt-5">
             <div className="row justify-content-center align-items-center">
@@ -66,7 +72,7 @@ export function SubjectList() {
                         <div className="card-header py-3">
                             <div className="row justify-content-between align-items-center">
                                 <h4 className="col text-muted">Our Subjects</h4>
-                                <div className="col-2 text-center">
+                                <div className="col-auto text-center">
                                     <Link to="/subjects/0/edit" className="btn btn-outline-primary">
                                         Add New Subject
                                     </Link>
@@ -74,7 +80,11 @@ export function SubjectList() {
                             </div>
                         </div>
                         <div className="card-body">
-                            {status === "loading" && <div>Loading...</div>}
+                            {status === 'loading' &&
+                                <div className="row justify-content-center align-content-center">
+                                    <div className="spinner-border text-primary tex-center my-5" role="status"></div>
+                                </div>
+                            }
                             {status === "failed" && <div>Error: {error}</div>}
                             {status === "succeeded" && (
                                 <>

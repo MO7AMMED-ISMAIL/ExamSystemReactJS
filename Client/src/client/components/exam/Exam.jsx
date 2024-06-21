@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchExam } from '../../slices/exams/examByIdSlice';
@@ -9,6 +9,7 @@ import { fetchDegreeStatus } from '../../slices/degree/hasDegreeSlice';
 import NoResult from '../../layouts/NoResult';
 
 const Exam = () => {
+
     const { examId } = useParams();
     const dispatch = useDispatch();
     const { exam, status: examStatus, error: examError } = useSelector((state) => state.exam);
@@ -20,35 +21,59 @@ const Exam = () => {
     const [correctAnswers, setCorrectAnswers] = useState([]);
     const [playRightAudio, setPlayRightAudio] = useState(false);
     const userId = localStorage.getItem('userId');
-    
+    const examFinished = useRef(false);
+    const examDurationSeconds = exam && exam.duration ? exam.duration * 60 : 0; 
+
     useEffect(() => {
+
         dispatch(fetchExam(examId));
-        dispatch(fetchDegreeStatus({ student: userId, exam: examId })); 
-    }, [examId , userId]);
+        dispatch(fetchDegreeStatus({ student: userId, exam: examId }));
+
+        const handleBeforeUnload = async (event) => {
+            if (timerStarted) {
+                event.preventDefault();
+                event.returnValue = '';
+                await finishExam();
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+        
+    }, [examId, userId, timerStarted]);
+
 
     useEffect(() => {
-        if (exam) {
-            setTimeLeft(exam.duration * 60);
+        if (exam && examDurationSeconds > 0) {
+            startTimer(examDurationSeconds);
         }
-    }, [exam]);
+    }, [exam, examDurationSeconds]);
+
+
+    const startTimer = (durationInSeconds) => {
+        setTimeLeft(durationInSeconds);
+        setTimerStarted(true);
+    };
+
 
     useEffect(() => {
-        if (timeLeft === 0) {
+        if (timeLeft === 0 && timerStarted && !examFinished.current) {
             alert('Time is up!');
+            finishExam();
         }
 
         if (timeLeft > 0 && timerStarted) {
-            const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+            const timer = setTimeout(() => {
+                setTimeLeft(prevTimeLeft => prevTimeLeft - 1);
+            }, 1000);
             return () => clearTimeout(timer);
         }
     }, [timeLeft, timerStarted]);
 
-    useEffect(() => {
-        if (timeLeft !== null) {
-            const startTimer = setTimeout(() => setTimerStarted(true), 2000);
-            return () => clearTimeout(startTimer);
-        }
-    }, [timeLeft]);
+
 
     const handleAnswer = (selectedAnswer, correctAnswer) => {
         const isCorrect = selectedAnswer === correctAnswer;
@@ -63,12 +88,17 @@ const Exam = () => {
         }
 
         const nextQuestionIndex = currentQuestionIndex + 1;
-
         setCurrentQuestionIndex(nextQuestionIndex);
-        if (nextQuestionIndex === exam.questions.length) {
+    };
+
+
+
+    useEffect(() => {
+        if (exam && exam.questions && currentQuestionIndex === exam.questions.length) {
             finishExam();
         }
-    };
+    }, [currentQuestionIndex, exam]);
+
 
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
@@ -76,7 +106,11 @@ const Exam = () => {
         return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
     };
 
+
     const finishExam = async () => {
+        if (examFinished.current) return; 
+        examFinished.current = true; 
+
         const degree = {
             degree: correctAnswers.length, 
             exam: examId,
@@ -90,6 +124,7 @@ const Exam = () => {
         }
     };
 
+    
     if (examStatus === 'loading' || degreeStatus === 'loading') {
         return <Loader />;
     }

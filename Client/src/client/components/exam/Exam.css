@@ -25,10 +25,10 @@
   font-size: 1.5em;
 }
 
-.exam-container content {
+.questionContainer{
   display: flex;
   flex-direction: column;
- padding-top:4%;
+ padding-top:3%;
 }
 
 .exam-container section{
@@ -44,7 +44,7 @@
   min-height:60vh;
 }
 
-button{
+.exam-container button{
    min-width:15%;
    min-height:10vh;
   background: #00b09b;
@@ -52,7 +52,7 @@ button{
   background: linear-gradient(to right, #96c93d, #00b09b); 
 }
 
-button:hover{
+.exam-container button:hover{
   background: #038374; 
   background: -webkit-linear-gradient(to right, #5b8612, #056e62); 
   background: linear-gradient(to right, #7aaa26, #047a6d); 

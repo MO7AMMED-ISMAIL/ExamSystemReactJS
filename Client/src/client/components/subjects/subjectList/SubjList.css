@@ -81,6 +81,7 @@ nav a:hover {
 
 header > section >p {
   color: rgb(49, 79, 5);
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 
@@ -125,7 +126,7 @@ article >section {
   
 }
 
-article >section >p {
+article >section >div > p {
   background-color: rgba(128, 244, 190, 0.462);
  display: flex;
  flex-wrap: wrap;

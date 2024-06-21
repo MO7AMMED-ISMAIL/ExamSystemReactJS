@@ -10,33 +10,12 @@ export function ExamDetails(){
     const exam = useSelector((state) => state.exams.exam);
     const status = useSelector((state) => state.exams.status);
     const error = useSelector((state) => state.exams.error);
-    const [subject, setSubject] = useState(null);
 
     useEffect(() => {
         if (id) {
             dispatch(fetchExamById(id));
         }
     }, [dispatch, id]);
-
-    useEffect(() => {
-        if (exam && exam.subject) {
-            fetchSubjectDetails(exam.subject);
-        }
-    }, [exam]);
-
-    const fetchSubjectDetails = async (subjectId) => {
-        try {
-            const response = await fetch(`/api/subjects/${subjectId}`);
-            if (response.ok) {
-                const data = await response.json();
-                setSubject(data);
-            } else {
-                console.error("Failed to fetch subject details");
-            }
-        } catch (error) {
-            console.error("Error fetching subject details:", error);
-        }
-    };
 
     const formatDate = (isoDateString) => {
         if (!isoDateString) return "Not specified";
@@ -88,30 +67,52 @@ export function ExamDetails(){
                                 <strong>Duration:</strong> {exam.duration} minutes
                             </div>
                             <div className="mb-3">
-                                <strong>Subject:</strong> {subject ? subject.subjectName : "Loading subject..."}
+                                <strong>Subject:</strong> {exam.subject ? exam.subject.subjectName : "Loading subject..."}
                             </div>
 
-                            {/* Render questions if needed */}
-                            {/* <div className="mb-3">
+                            <div className="mb-3">
                                 <strong>Questions:</strong>
-                                <ul className="list-group mt-2">
-                                    {exam.questions.map((question) => (
-                                        <li key={question._id} className="list-group-item">
-                                            <div>{question.questionText}</div>
-                                            <div>
-                                                <strong>Options:</strong> {question.options.join(", ")}
-                                            </div>
-                                            <div>
-                                                <strong>Correct Answer:</strong> {question.correctAnswer}
-                                            </div>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div> */}
+                                {exam.questions && exam.questions.length > 0 ? (
+                                    <ul className="list-group mt-2">
+                                        {exam.questions.map((question) => (
+                                            <li key={question._id} className="list-group-item mb-3 shadow-sm p-3 rounded">
+                                                <div className="mb-2">
+                                                    <strong>{question.questionText}</strong>
+                                                </div>
+                                                <div>
+                                                    <div className="options">
+                                                        {question.options.map((option, index) => (
+                                                            <div key={index} className="form-check">
+                                                                <input
+                                                                    type="radio"
+                                                                    id={`question-${question._id}-option-${index}`}
+                                                                    name={`question-${question._id}`}
+                                                                    value={option}
+                                                                    className="form-check-input"
+                                                                    checked={option === question.correctAnswer}
+                                                                    readOnly
+                                                                />
+                                                                <label
+                                                                    htmlFor={`question-${question._id}-option-${index}`}
+                                                                    className="form-check-label"
+                                                                >
+                                                                    {option}
+                                                                </label>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <div>No questions available</div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </>
     );
-};
+}

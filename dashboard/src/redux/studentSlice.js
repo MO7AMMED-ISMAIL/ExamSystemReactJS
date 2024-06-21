@@ -24,6 +24,41 @@ export const allStudent = createAsyncThunk(
         }
 });
 
+export const addStudent = createAsyncThunk(
+    'students/addStudent',
+    async (formData,ThunkAPI) => {
+        const {rejectWithValue} = ThunkAPI;
+        try {
+            const response = await axios.post('http://localhost:8000/api/students',formData,{
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            return response.data;
+        }catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
+
+export const deleteStudent = createAsyncThunk(
+    'students/deleteStudent',
+    async (id,ThunkAPI) => {
+        const {rejectWithValue} = ThunkAPI;
+        try{
+            const response = await axios.delete(`http://localhost:8000/api/students/${id}`,{
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            return response.data;
+        }catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
+
 const studentSlice = createSlice({
     name: 'students',
     initialState,
@@ -50,6 +85,19 @@ const studentSlice = createSlice({
                 state.error = action.payload;
                 state.success = false;
             })
+            .addCase(addStudent.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(addStudent.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.students.push(action.payload);
+                state.success = true;
+            })
+            .addCase(addStudent.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.payload;
+                state.success = false;
+            });
     }
 });
 

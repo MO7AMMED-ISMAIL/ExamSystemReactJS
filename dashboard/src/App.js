@@ -11,6 +11,7 @@ import {ExamDetails} from "./components/Exam/ExamDetails";
 import {NotFound} from "./layouts/errors/NotFound";
 import {Error} from "./layouts/errors/Error";
 import {examDetailsLoader, examFormLoader} from "./loaders/loaders";
+import AddStudent from "./components/Student/AddStudent";
 
 function App() {
     const router = createBrowserRouter(
@@ -23,6 +24,7 @@ function App() {
                 }>
                     <Route path="profile" element={<UserProfile/>}/>
                     <Route path="students" element={<AllStudent/>}/>
+                    <Route path="students/add" element={<AddStudent/>}/>
                     <Route path="exams" element={<ExamList/>} />
                     <Route path="exams/new" element={<ExamForm/>} loader={examFormLoader} />
                     <Route path="exams/:id" element={<ExamDetails/>} loader={examDetailsLoader} errorElement={<Error />}/>

@@ -1,7 +1,5 @@
 import React from 'react'
-import Sidebar from '../components/Sidebar'
 import Navbar from './Navbar'
-// import Content from './Content'
 import { Outlet } from 'react-router-dom'
 
 function SharedLayout() {

@@ -4,7 +4,6 @@ import "../../css/Error.css";
 
 export function Error() {
     const error = useRouteError();
-    console.log(error);
     return (
         <div className="main-error-page">
             <svg

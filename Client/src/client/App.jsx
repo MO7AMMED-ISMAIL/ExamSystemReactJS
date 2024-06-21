@@ -17,7 +17,7 @@ export default function App() {
   
   const routes = createRoutesFromElements(
     <>
-      <Route path="/" element={<Navigate to="/subject" />} />
+      <Route exact path="/" element={<Navigate to="/login" />} />
       <Route path="/register" element={<RegisterForm />} />
       <Route path="/login" element={<LoginForm />} />
 

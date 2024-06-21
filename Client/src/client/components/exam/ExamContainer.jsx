@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Clock } from 'react-bootstrap-icons';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import Swal from 'sweetalert2';
 import './Exam.css';
-import rightAudio from '/right.mp3'; 
+import rightAudio from '/right.mp3';
+
 
 export default function ExamContainer({ exam, currentQuestionIndex, isAnswerCorrect, timeLeft, correctAnswers, handleAnswer, formatTime, playRightAudio }) {
-    
+  
     const pass = Math.ceil(exam.questions.length / 2);
+    const [alertShown, setAlertShown] = useState(false);
 
     useEffect(() => {
         if (playRightAudio) {
@@ -15,6 +18,51 @@ export default function ExamContainer({ exam, currentQuestionIndex, isAnswerCorr
         }
     }, [playRightAudio]);
 
+
+    useEffect(() => {
+
+        const handlePopstate = (event) => {
+            event.preventDefault();
+            if (!alertShown) {
+                alert('You cannot go back during the exam.');
+                setAlertShown(true);
+            }
+            window.history.forward();
+        };
+
+        window.addEventListener('popstate', handlePopstate);
+
+        window.history.pushState(null, null, window.location.href);
+
+        return () => {
+            window.removeEventListener('popstate', handlePopstate);
+        };
+
+    }, [alertShown]);
+
+
+    useEffect(() => {
+
+        if (currentQuestionIndex === exam.questions.length) {
+            handleExamCompletion();
+        }
+    }, [currentQuestionIndex, exam.questions.length]);
+
+    const handleExamCompletion = () => {
+        const examPassed = correctAnswers.length >= pass;
+
+        Swal.fire({
+            title: examPassed ? 'Congratulations! You Passed!' : 'Sorry! You Failed!',
+            text: `Correct Answers: ${correctAnswers.length}`,
+            icon: examPassed ? 'success' : 'error',
+            confirmButtonText: 'Go to Subjects',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/subject'; 
+            } 
+        });
+
+    };
 
 
     return (
@@ -32,7 +80,7 @@ export default function ExamContainer({ exam, currentQuestionIndex, isAnswerCorr
                     <Clock size={20} />
                     <span className="ms-1">{formatTime(timeLeft)}</span>
                 </aside>
-
+                
             </header>
 
             <section className='row'>
@@ -45,7 +93,7 @@ export default function ExamContainer({ exam, currentQuestionIndex, isAnswerCorr
                     />
                 </aside>
 
-                <content className="col-7">
+                <div className="col-7 questionContainer">
                     <ProgressBar
                         now={(currentQuestionIndex / exam.questions.length) * 100}
                         label={`${currentQuestionIndex} / ${exam.questions.length}`}
@@ -65,23 +113,14 @@ export default function ExamContainer({ exam, currentQuestionIndex, isAnswerCorr
                                 </button>
                             ))}
                         </div>
-                    ) : (
-                        <div className='text-center my-5'>
-                            <h4>Exam Completed!</h4>
-                            <p>Correct Answers: {correctAnswers.length}</p>
-                            {correctAnswers.length >= pass ? (
-                                <p className="text-success display-6 my-5">Congratulations! You passed the exam.</p>
-                            ) : (
-                                <p className="text-danger display-6 my-5">Sorry! You failed the exam.</p>
-                            )}
-                        </div>
-                    )}
-                </content>
+                    ) : null}
+
+                </div>
 
             </section>
-
+            
         </main>
-
     );
 }
+
 

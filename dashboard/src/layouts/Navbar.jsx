@@ -1,15 +1,24 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {Link, NavLink, useNavigate} from 'react-router-dom';
-import { Navbar, Nav, NavDropdown, Button, Modal } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Button ,Modal} from 'react-bootstrap';
 
 const CustomNavbar = () => {
     const navigate = useNavigate();
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     const handleLogout = () => {
+        setShowLogoutModal(true);
+    }
+    const handleConfirmLogout = () => {
         console.log("logout");
         localStorage.clear();
         navigate('/login');
-    }
+        setShowLogoutModal(false);
+    };
+
+    const handleCancelLogout = () => {
+        setShowLogoutModal(false);
+    };
 
     return (
         <>
@@ -55,12 +64,12 @@ const CustomNavbar = () => {
                             </>}
                             id="userDropdown"
                         >
-                            <NavDropdown.Item as={Link} to="/home/profile">
+                            <NavDropdown.Item as={Link} to="/profile">
                                 <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
                             </NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item>
-                                <Button variant="link" onClick={handleLogout} data-bs-toggle="modal" data-bs-target="#modalId">
+                                <Button onClick={handleLogout}>
                                     <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
                                 </Button>
                             </NavDropdown.Item>
@@ -69,20 +78,22 @@ const CustomNavbar = () => {
                 </Navbar.Collapse>
             </Navbar>
 
-            <Modal show={false} id="modalId" backdrop="static" keyboard={false} centered>
+
+            <Modal show={showLogoutModal} onHide={handleCancelLogout}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal title</Modal.Title>
+                    <Modal.Title>Confirm Logout</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Body</Modal.Body>
+                <Modal.Body>Are you sure you want to log out?</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => { }}>
-                        Close
+                    <Button variant="secondary" onClick={handleCancelLogout}>
+                        Cancel
                     </Button>
-                    <Button variant="primary" onClick={handleLogout}>
-                        Logout
+                    <Button variant="primary" onClick={handleConfirmLogout}>
+                        Confirm Logout
                     </Button>
                 </Modal.Footer>
             </Modal>
+            
         </>
     );
 };

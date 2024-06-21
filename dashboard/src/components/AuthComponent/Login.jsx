@@ -23,7 +23,7 @@ export default function Login() {
                 localStorage.setItem('name',result.payload.name);
                 localStorage.setItem('email',result.payload.email);
                 localStorage.setItem('image',result.payload.image);
-                navigate('/home');
+                navigate('/');
             }else{
                 setAuthError('You are not admin');
                 navigate('/login');

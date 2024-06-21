@@ -13,8 +13,9 @@ const getAllExams = async () => {
 };
 
 const getExamById = async (id) => {
+    console.log(id)
     try {
-        const response = await axiosInstance.get(`${EXAMS_URL}/${id}`);
+        const response = await axiosInstance.get(`examsById/${id}`);
         return response.data;
     } catch (error) {
         console.error(`Error fetching exam with id ${id}:`, error);

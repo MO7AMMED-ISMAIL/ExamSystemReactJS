@@ -86,20 +86,25 @@ export function ExamList() {
                                     >
                                         <thead>
                                         <tr>
-                                            <th>#</th> {/* Number column */}
+                                            <th>#</th>
                                             <th>Title</th>
-                                            <th>Description</th>
-                                            <th>Date</th> {/* Date column */}
+                                            <th>Subject</th>
+                                            <th>Duration</th>
+                                            <th>No Of Qs</th>
+                                            <th>Date</th>
                                             <th>Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {currentExams.map((exam, index) => (
                                             <tr key={exam._id}>
-                                                <td>{indexOfFirstExam + index + 1}</td> {/* Display number from 1 to exams.length */}
+                                                <td>{indexOfFirstExam + index + 1}</td>
+                                                {/* Display number from 1 to exams.length */}
                                                 <td>{exam.examName}</td>
-                                                <td>{exam.description}</td>
-                                                <td>{formatDate(exam.date)}</td> {/* Display formatted date */}
+                                                <td>{exam.subject ? exam.subject.subjectName : "Loading subject..."}</td>
+                                                <td>{exam.duration} minutes</td>
+                                                <td>{exam.questions.length}</td>
+                                                <td>{formatDate(exam.date)}</td>
                                                 <td className="w-25">
                                                     <div className="row justify-content-start align-items-start">
                                                         <div className="col-auto">

@@ -69,13 +69,16 @@ export function ExamDetails(){
                             <div className="mb-3">
                                 <strong>Subject:</strong> {exam.subject ? exam.subject.subjectName : "Loading subject..."}
                             </div>
-
                             <div className="mb-3">
-                                <strong>Questions:</strong>
+                                <strong>Total Number of Questions:</strong> {exam.questions && exam.questions.length > 0 ? exam.questions.length : "Loading subject..."}
+                            </div>
+                            <div className="mb-3">
+                                <strong className='text-info fs-5'>Questions:</strong>
                                 {exam.questions && exam.questions.length > 0 ? (
                                     <ul className="list-group mt-2">
                                         {exam.questions.map((question) => (
-                                            <li key={question._id} className="list-group-item mb-3 shadow-sm p-3 rounded">
+                                            <li key={question._id}
+                                                className="list-group-item mb-3 shadow-sm p-3 rounded">
                                                 <div className="mb-2">
                                                     <strong>{question.questionText}</strong>
                                                 </div>

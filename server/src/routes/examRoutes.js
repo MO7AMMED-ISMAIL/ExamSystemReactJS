@@ -17,6 +17,8 @@ router.route("/exams")
 router.route("/exams/:id")
     .get(All,getExamByIdValidator,resultValdation,examController.startExam);
 
+router.route("/examsById/:id")
+    .get(All,getExamByIdValidator,resultValdation,examController.getExamById);
 
 router.route("/exams/subject/:subjectId")
     .get(All,examController.getExamsBySubjectId);

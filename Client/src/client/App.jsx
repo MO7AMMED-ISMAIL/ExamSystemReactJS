@@ -6,6 +6,7 @@ import Loader from './layouts/Loader';
 import RegisterForm from './components/auth/RegisterForm';
 import LoginForm from './components/auth/LoginForm';
 import ProtectedRoute from './protected/ProtectedRoutes';
+import NoResult from './layouts/NoResult';
 
 
 const SubjectsList = lazy(() => import('./components/subjects/subjectList/SubjectsList'));
@@ -50,7 +51,12 @@ export default function App() {
           }
         />
        
+
       </Route>
+
+      <Route path="*" element={<NoResult header={"Not Found"} />} />
+
+
     </>
   );
 

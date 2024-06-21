@@ -8,7 +8,7 @@ export const register = async (name, email, password, age, imageFile) => {
   formData.append('age', age);
   formData.append('image', imageFile);
   try {
-    const response = await axios.post('/students', formData, {
+    const response = await axios.post('/register', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

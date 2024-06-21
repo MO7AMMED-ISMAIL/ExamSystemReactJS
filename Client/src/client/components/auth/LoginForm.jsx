@@ -55,7 +55,7 @@ const LoginForm = () => {
 
               {status === 'failed' && (
                 <div className="text-center text-danger">
-                  <span>Invalid email or password. Please check your credentials and try again.</span>
+                  <span>Invalid email or password</span>
                 </div>
               )}
               

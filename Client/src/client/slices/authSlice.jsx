@@ -14,8 +14,8 @@ export const registerUser = createAsyncThunk('auth/register', async ({ name, ema
 export const setUser = createAction('auth/setUser');
 
 const authSlice = createSlice({
-  name: 'auth',
-  initialState: {
+    name: 'auth',
+    initialState: {
     user: null,
     userId: null, 
     token: localStorage.getItem('token'), 
@@ -28,7 +28,8 @@ const authSlice = createSlice({
       state.user = null;
       state.userId = null;
       state.token = null;
-      state.loggedIn = false;
+      state.loggedIn = false; 
+      state.status = 'false'; 
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
     },

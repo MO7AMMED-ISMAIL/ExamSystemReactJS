@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './NotFound.css'; // Assuming you will put your styles in a separate CSS file
+import '../../css/NotFound.css'; // Assuming you will put your styles in a separate CSS file
 
 
 export function NotFound() {

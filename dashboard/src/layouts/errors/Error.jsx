@@ -1,10 +1,10 @@
 import React from "react";
 import { useRouteError } from "react-router-dom";
-import "./Error.css";
+import "../../css/Error.css";
 
 export function Error() {
     const error = useRouteError();
-    console.log(error, error.message);
+    console.log(error);
     return (
         <div className="main-error-page">
             <svg

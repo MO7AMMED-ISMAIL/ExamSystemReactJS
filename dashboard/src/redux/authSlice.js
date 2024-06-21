@@ -8,16 +8,25 @@ export const login = createAsyncThunk('auth/login',
         try {
             const response = await axios.post('http://localhost:8000/api/login',
                 { email, password });
-            const token = response.data.token;
-            const decodedToken = jwtDecode(token);
-            const expirationTime = decodedToken.exp * 1000;
-            const id = decodedToken.id;
-            const adminEmail = decodedToken.email;
-            const name = decodedToken.name;
-            const image = decodedToken.image;
-            return {token, image, role: response.data.role, expirationTime,id,email: adminEmail,name,success: true};
+                if(response.status === 200){
+                    if(response.data.role === 'admin'){
+                        const token = response.data.token;
+                        const decodedToken = jwtDecode(token);
+                        const expirationTime = decodedToken.exp * 1000;
+                        const id = decodedToken.id;
+                        const adminEmail = decodedToken.email;
+                        const name = decodedToken.name;
+                        const image = decodedToken.image;
+                        return {token, image, role: response.data.role, expirationTime,id,email: adminEmail,name,success: true};
+                    }else{
+                        return rejectWithValue("You are not an admin");
+                    }
+                }else{
+                    rejectWithValue("OPPS server is shutdown");
+                }
         }catch(error){
-            return rejectWithValue(error.response.data.data);
+            // console.log(error);
+            return rejectWithValue(error.message);
         }
     }
 );
@@ -71,7 +80,7 @@ const authSlice = createSlice({
         })
         .addCase(login.rejected, (state, action) => {
             state.status = 'failed';
-            state.error = action.error.message;
+            state.error = action.payload;
         })
         //update Profile
         .addCase(updateProfile.pending, (state) => {

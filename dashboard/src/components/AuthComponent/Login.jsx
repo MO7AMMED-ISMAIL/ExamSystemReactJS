@@ -8,28 +8,30 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { status, error } = useSelector((state) => state.auth);
+    const { status } = useSelector((state) => state.auth);
     const [AuthError , setAuthError] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(login({ email, password })).then((result) => {
-            console.log(result);
-            if(result.payload.success === true && result.payload.role === 'admin'){
-                localStorage.setItem('token',result.payload.token);
-                localStorage.setItem('role', result.payload.role);
-                localStorage.setItem('expirationTime',result.payload.expirationTime);
-                localStorage.setItem('id',result.payload.id);
-                localStorage.setItem('name',result.payload.name);
-                localStorage.setItem('email',result.payload.email);
-                localStorage.setItem('image',result.payload.image);
-                navigate('/');
+            if(result.payload.role === 'admin'){
+                if(result.payload.success === true ){
+                    localStorage.setItem('token',result.payload.token);
+                    localStorage.setItem('role', result.payload.role);
+                    localStorage.setItem('expirationTime',result.payload.expirationTime);
+                    localStorage.setItem('id',result.payload.id);
+                    localStorage.setItem('name',result.payload.name);
+                    localStorage.setItem('email',result.payload.email);
+                    localStorage.setItem('image',result.payload.image);
+                    navigate('/');
+                }
             }else{
-                setAuthError('You are not admin');
+                console.log(result.payload);
+                setAuthError(result.payload);
                 navigate('/login');
             }
         }).catch((err) => {
-            console.log(err);
+            setAuthError(err.payload);
         });
     };
 
@@ -50,7 +52,7 @@ export default function Login() {
                             <button type="submit" className="btn btn-primary">Login</button>
                         </form>
                         {status === 'loading' && <div className="spinner-border text-primary" role="status"></div>}
-                        {status === 'failed' && <p className='alert alert-danger text-center mt-2'>{error}</p>}
+                        {/* {status === 'failed' && <p className='alert alert-danger text-center mt-2'>{error}</p>} */}
                         {AuthError && <p className='alert alert-danger text-center mt-2'>{AuthError}</p>}
                     </div>
                 </div>

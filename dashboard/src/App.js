@@ -30,8 +30,8 @@ function App() {
                     <Route path="students" element={<AllStudent/>}/>
                     <Route path="exams" element={<ExamList/>} />
                     <Route path="exams/new" element={<ExamForm/>} />
-                    <Route path="exams/:id" element={<ExamDetails/>} errorElement={<Error />}/>
-                    <Route path="exams/:id/edit" element={<ExamForm/>} errorElement={<Error />}/>
+                    <Route path="exams/:id" element={<ExamDetails/>} loader={examDetailsLoader} errorElement={<Error />}/>
+                    <Route path="exams/:id/edit" element={<ExamForm/>} loader={examFormLoader} errorElement={<Error />}/>
 
                     <Route path="subjects" element={<SubjectList/>}/>
                     <Route path="subjects/:id" element={<SubjectDetails/>} loader={subjectDetailsLoader} errorElement={<Error />}/>

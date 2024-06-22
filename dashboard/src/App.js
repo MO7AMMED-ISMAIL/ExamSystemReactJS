@@ -10,7 +10,7 @@ import React from "react";
 import {ExamDetails} from "./components/Exam/ExamDetails";
 import {NotFound} from "./layouts/errors/NotFound";
 import {Error} from "./layouts/errors/Error";
-import {subjectDetailsLoader, subjectFormLoader} from "./loaders/loaders";
+import {examDetailsLoader, examFormLoader, subjectDetailsLoader, subjectFormLoader} from "./loaders/loaders";
 import {SubjectList} from "./components/Subject/SubjectList";
 import {SubjectForm} from "./components/Subject/SubjectForm";
 import {SubjectDetails} from "./components/Subject/SubjectDetails";

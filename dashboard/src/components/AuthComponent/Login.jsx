@@ -30,7 +30,7 @@ export default function Login() {
                         navigate('/');
                     }
                 } else {
-                    setAuthError(result.payload.message);
+                    setAuthError("You Are Not Admin");
                     navigate('/login');
                 }
             })

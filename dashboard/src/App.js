@@ -10,10 +10,13 @@ import React from "react";
 import {ExamDetails} from "./components/Exam/ExamDetails";
 import {NotFound} from "./layouts/errors/NotFound";
 import {Error} from "./layouts/errors/Error";
-import {examDetailsLoader, examFormLoader, subjectDetailsLoader, subjectFormLoader} from "./loaders/loaders";
+import {subjectDetailsLoader, subjectFormLoader} from "./loaders/loaders";
 import {SubjectList} from "./components/Subject/SubjectList";
 import {SubjectForm} from "./components/Subject/SubjectForm";
 import {SubjectDetails} from "./components/Subject/SubjectDetails";
+import AddStudent from "./components/Student/AddStudent";
+
+
 import {HomePage} from "./components/HomePage";
 
 function App() {
@@ -28,6 +31,7 @@ function App() {
                     <Route path="" element={<HomePage/>}/>
                     <Route path="profile" element={<UserProfile/>}/>
                     <Route path="students" element={<AllStudent/>}/>
+                    <Route path="students/add" element={<AddStudent/>}/>
                     <Route path="exams" element={<ExamList/>} />
                     <Route path="exams/new" element={<ExamForm/>} />
                     <Route path="exams/:id" element={<ExamDetails/>} loader={examDetailsLoader} errorElement={<Error />}/>

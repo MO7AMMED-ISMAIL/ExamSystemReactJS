@@ -29,6 +29,22 @@ function UserProfile() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!name.trim()) {
+            setError('Name is required');
+            setSucess('');
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email.trim()) {
+            setError('Email is required');
+            setSucess('');
+            return;
+        } else if (!emailRegex.test(email)) {
+            setError('Invalid email format');
+            setSucess('');
+            return;
+        }
         const formData = new FormData();
         formData.append('id', localStorage.getItem('id'));
         formData.append('name', name);
@@ -36,7 +52,8 @@ function UserProfile() {
         if (imageFile) {
             formData.append('image', imageFile);
         }
-        dispatch(updateProfile(formData)).then((result) => {
+        dispatch(updateProfile(formData))
+        .then((result) => {
             if(result.payload.status === 200){
                 localStorage.setItem('name', result.payload.data.name);
                 localStorage.setItem('email', result.payload.data.email);
@@ -44,19 +61,16 @@ function UserProfile() {
                 setSucess('Profile Updated Successfully');
                 setError('');
             }
-        }).catch((err) => {
-            setError(err.message);
+        }).catch((error) => {
+            console.log(error);
+            setError(error.message);
             setSucess('');
         });
     }
 
     return (
         <>
-            {/* make a card from to make update the data using bootstrap */}
-            {
-                error && <div className='alert alert-danger'>{error}</div>
-            }
-            <div className='card w-full max-w-md mx-1auto mt-3' style={{ width: '30rem' }}>
+            <div className='card w-full max-w-md mx-auto mt-3' style={{ width: '30rem' }}>
                 <div className='card-title text-center mt-3'>
                     <h2>User Profile</h2>
                 </div>
@@ -86,6 +100,9 @@ function UserProfile() {
                     }
                     {
                         sucess && <div className='alert alert-success mt-2 text-center'>{sucess}</div>
+                    }
+                    {
+                        error && <div className='alert alert-danger mt-2'>{error}</div>
                     }
                 </div>
                 

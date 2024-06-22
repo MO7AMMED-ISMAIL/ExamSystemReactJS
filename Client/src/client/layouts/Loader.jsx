@@ -10,7 +10,7 @@ const Loader = () => {
       <ClipLoader
         color={color}
         loading={loading}
-        size={150}
+        size={70}
         aria-label="Loading Spinner"
         data-testid="loader"
       />

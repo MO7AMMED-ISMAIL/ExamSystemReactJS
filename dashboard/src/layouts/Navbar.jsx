@@ -23,7 +23,7 @@ const CustomNavbar = () => {
     return (
         <>
             <Navbar expand="lg" bg="white" className="shadow rounded p-3">
-                <Navbar.Brand href="#">
+                <Navbar.Brand href="/">
                     <img
                         src="https://themewagon.github.io/alazea/img/bg-img/10.jpg"
                         alt="Logo"

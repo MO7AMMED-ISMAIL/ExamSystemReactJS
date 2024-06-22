@@ -14,6 +14,7 @@ import {examDetailsLoader, examFormLoader, subjectDetailsLoader, subjectFormLoad
 import {SubjectList} from "./components/Subject/SubjectList";
 import {SubjectForm} from "./components/Subject/SubjectForm";
 import {SubjectDetails} from "./components/Subject/SubjectDetails";
+import {HomePage} from "./components/HomePage";
 
 function App() {
     const router = createBrowserRouter(
@@ -24,6 +25,7 @@ function App() {
                     <SharedLayout />
                 </PrivateRoute>
                 }>
+                    <Route path="" element={<HomePage/>}/>
                     <Route path="profile" element={<UserProfile/>}/>
                     <Route path="students" element={<AllStudent/>}/>
                     <Route path="exams" element={<ExamList/>} />

@@ -3,6 +3,7 @@ import authSlice from "./authSlice";
 import studentSlice from "./studentSlice";
 import examReducer from "./examSlice";
 import subjectReducer from "./subjectSlice";
+import degreeReducer from "./degreeSlice";
 
 
 const store = configureStore({
@@ -10,7 +11,8 @@ const store = configureStore({
         auth: authSlice,
         students: studentSlice,
         exams: examReducer,
-        subjects: subjectReducer
+        subjects: subjectReducer,
+        degrees: degreeReducer
     },
 })
 

@@ -44,7 +44,7 @@ export const updateProfile = createAsyncThunk('auth/update',
             });
             return response.data;
         }catch(error){
-            rejectWithValue(error.response.data);
+            rejectWithValue(error.message);
         }
     }
 )

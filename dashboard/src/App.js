@@ -10,8 +10,13 @@ import React from "react";
 import {ExamDetails} from "./components/Exam/ExamDetails";
 import {NotFound} from "./layouts/errors/NotFound";
 import {Error} from "./layouts/errors/Error";
-import {examDetailsLoader, examFormLoader} from "./loaders/loaders";
+import {subjectDetailsLoader, subjectFormLoader} from "./loaders/loaders";
+import {SubjectList} from "./components/Subject/SubjectList";
+import {SubjectForm} from "./components/Subject/SubjectForm";
+import {SubjectDetails} from "./components/Subject/SubjectDetails";
 import AddStudent from "./components/Student/AddStudent";
+
+
 
 function App() {
     const router = createBrowserRouter(
@@ -26,9 +31,13 @@ function App() {
                     <Route path="students" element={<AllStudent/>}/>
                     <Route path="students/add" element={<AddStudent/>}/>
                     <Route path="exams" element={<ExamList/>} />
-                    <Route path="exams/new" element={<ExamForm/>} loader={examFormLoader} />
-                    <Route path="exams/:id" element={<ExamDetails/>} loader={examDetailsLoader} errorElement={<Error />}/>
+                    <Route path="exams/new" element={<ExamForm/>} />
+                    <Route path="exams/:id" element={<ExamDetails/>} errorElement={<Error />}/>
                     <Route path="exams/:id/edit" element={<ExamForm/>} errorElement={<Error />}/>
+
+                    <Route path="subjects" element={<SubjectList/>}/>
+                    <Route path="subjects/:id" element={<SubjectDetails/>} loader={subjectDetailsLoader} errorElement={<Error />}/>
+                    <Route path="subjects/:id/edit" element={<SubjectForm/>} errorElement={<Error />} loader={subjectFormLoader} />
                 </Route>
                 <Route path='*' element={<NotFound/>}/>
             </>

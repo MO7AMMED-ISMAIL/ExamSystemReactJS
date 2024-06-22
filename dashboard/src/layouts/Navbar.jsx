@@ -37,16 +37,16 @@ const CustomNavbar = () => {
                 <Navbar.Collapse id="navbar">
                     <Nav className="me-auto mb-2 mb-lg-0">
                         <NavLink className={({isActive}) => {
-                            return isActive ? 'text-success nav-link' : "nav-link"
+                            return isActive ? 'text-primary nav-link' : "nav-link"
                         }} to="/students">Students</NavLink>
 
                         <NavLink className={({isActive}) => {
-                        return isActive ? 'text-success nav-link' : "nav-link"
+                        return isActive ? 'text-primary nav-link' : "nav-link"
                     }} to="/exams">Exams</NavLink>
 
                         <NavLink className={({isActive}) => {
-                        return isActive ? 'text-success nav-link' : "nav-link"
-                    }} to="/exams">Subjects</NavLink>
+                        return isActive ? 'text-primary nav-link' : "nav-link"
+                    }} to="/subjects">Subjects</NavLink>
                     </Nav>
                     <Nav className="ms-auto">
                         <NavDropdown

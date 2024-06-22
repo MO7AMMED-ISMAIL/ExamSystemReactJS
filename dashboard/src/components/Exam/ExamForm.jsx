@@ -1,21 +1,22 @@
-// dashboard/src/components/Exam/ExamForm.jsx
-import React, { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchExamById, createExamThunk, updateExamThunk } from "../../redux/examSlice";
+import React, {useEffect, useState} from "react";
+import {Button, Form} from "react-bootstrap";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {createExamThunk, fetchExamById, updateExamThunk} from "../../redux/examSlice";
+import {fetchSubjects} from "../../redux/subjectSlice";
+import { Trash } from 'react-bootstrap-icons';
 
 export function ExamForm() {
     const dispatch = useDispatch();
-    const { id } = useParams();
+    const {id} = useParams();
     const navigate = useNavigate();
     const exam = useSelector((state) => state.exams.exam);
+    const subjects = useSelector((state) => state.subjects.subjects || []);
 
     const initialQuestion = {
         questionText: '',
         options: ['', '', '', ''],
         correctAnswer: '',
-        _id: Date.now().toString() // Generate a unique ID for each question
     };
 
     const [formData, setFormData] = useState({
@@ -23,11 +24,13 @@ export function ExamForm() {
         description: '',
         duration: '',
         date: '',
+        subject: '',
         questions: [initialQuestion]
     });
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
+        dispatch(fetchSubjects());
         if (id !== '0') {
             dispatch(fetchExamById(id));
         }
@@ -40,6 +43,7 @@ export function ExamForm() {
                 description: exam.description || "",
                 duration: exam.duration || "",
                 date: exam.date || "",
+                subject: exam.subject?._id || '',
                 questions: exam.questions || [initialQuestion]
             });
         }
@@ -116,6 +120,12 @@ export function ExamForm() {
         });
     };
 
+    const deleteQuestion = (index) => {
+        const updatedQuestions = [...formData.questions];
+        updatedQuestions.splice(index, 1);
+        setFormData({ ...formData, questions: updatedQuestions });
+    };
+
     return (
         <>
             <div className="row justify-content-center align-items-center">
@@ -142,7 +152,8 @@ export function ExamForm() {
                                         value={formData.examName}
                                         onChange={changeHandler}
                                     />
-                                    {errors.examName && <Form.Text className="text-danger">{errors.examName}</Form.Text>}
+                                    {errors.examName &&
+                                        <Form.Text className="text-danger">{errors.examName}</Form.Text>}
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formDescription">
                                     <Form.Label>Description</Form.Label>
@@ -176,35 +187,64 @@ export function ExamForm() {
                                     />
                                 </Form.Group>
 
+                                <Form.Group className="mb-3" controlId="formSubject">
+                                    <Form.Label>Subject</Form.Label>
+                                    <Form.Control
+                                        as="select"
+                                        name="subject"
+                                        value={formData.subject}
+                                        onChange={changeHandler}
+                                    >
+                                        {subjects.length > 0 ? (
+                                            subjects.map((subject) => (
+                                                <option key={subject._id} value={subject._id}>
+                                                    {subject.subjectName} - {subject.description}
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option>No subjects available</option>
+                                        )}
+                                    </Form.Control>
+                                </Form.Group>
+
                                 <Form.Group className="mb-3">
                                     <Form.Label>Questions</Form.Label>
                                     {formData.questions.map((question, index) => (
-                                        <div key={index}>
-                                            <Form.Label>Question {index + 1}</Form.Label>
+                                        <div key={index} className="mb-4 p-3 border rounded">
+                                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                                <h5>Question {index + 1}</h5>
+                                                <Button
+                                                    variant="danger"
+                                                    onClick={() => deleteQuestion(index)}
+                                                    className="align-self-start pb-0 pt-3"
+                                                >
+                                                    <Trash/>
+                                                </Button>
+                                            </div>
                                             <Form.Control className='mb-3'
-                                                placeholder="Enter question text"
-                                                type="text"
-                                                name={`questionText[${index}]`}
-                                                value={question.questionText}
-                                                onChange={(e) => questionChangeHandler(index, e)}
+                                                          placeholder="Enter question text"
+                                                          type="text"
+                                                          name={`questionText`}
+                                                          value={question.questionText}
+                                                          onChange={(e) => questionChangeHandler(index, e)}
                                             />
                                             <Form.Label>Options</Form.Label>
                                             {question.options.map((option, optionIndex) => (
                                                 <Form.Control className="mb-3"
-                                                    key={optionIndex}
-                                                    placeholder={`Option ${optionIndex + 1}`}
-                                                    type="text"
-                                                    name={`options[${index}][${optionIndex}]`}
-                                                    value={option}
-                                                    onChange={(e) => changeHandler(e)}
+                                                              key={optionIndex}
+                                                              placeholder={`Option ${optionIndex + 1}`}
+                                                              type="text"
+                                                              name={`options[${index}][${optionIndex}]`}
+                                                              value={option}
+                                                              onChange={(e) => changeHandler(e)}
                                                 />
                                             ))}
                                             <Form.Label>Correct Answer</Form.Label>
                                             <Form.Control className="mb-3"
-                                                as="select"
-                                                name={`questions[${index}].correctAnswer`}
-                                                value={question.correctAnswer}
-                                                onChange={(e) => questionChangeHandler(index, e)}
+                                                          as="select"
+                                                          name={`correctAnswer`}
+                                                          value={question.correctAnswer}
+                                                          onChange={(e) => questionChangeHandler(index, e)}
                                             >
                                                 {question.options.map((option, optionIndex) => (
                                                     <option key={optionIndex} value={option}>

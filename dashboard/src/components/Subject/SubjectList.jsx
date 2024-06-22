@@ -2,36 +2,38 @@ import React, { useEffect, useState } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteExam, fetchExams } from "../../redux/examSlice";
+import { deleteSubject, fetchSubjects } from "../../redux/subjectSlice";
 import { Error } from "../../layouts/errors/Error";
 
-export function ExamList() {
+export function SubjectList() {
     const dispatch = useDispatch();
-    const exams = useSelector((state) => state.exams.exams || []);
-    const status = useSelector((state) => state.exams.status);
-    const error = useSelector((state) => state.exams.error);
+    const subjects = useSelector((state) => state.subjects.subjects || []);
+    const status = useSelector((state) => state.subjects.status);
+    const error = useSelector((state) => state.subjects.error);
     const [currentPage, setCurrentPage] = useState(1);
-    const examsPerPage = 20;
+    const subjectsPerPage = 20;
     const [showConfirmation, setShowConfirmation] = useState(false);
-    const [deletingExamId, setDeletingExamId] = useState(null);
+    const [deletingSubjectId, setDeletingSubjectId] = useState(null);
 
-    // Calculate the index of the first and last exams for the current page
-    const indexOfLastExam = currentPage * examsPerPage;
-    const indexOfFirstExam = indexOfLastExam - examsPerPage;
-    const currentExams = exams.slice(indexOfFirstExam, indexOfLastExam);
+    // Calculate the index of the first and last subjects for the current page
+    const indexOfLastSubject = currentPage * subjectsPerPage;
+    const indexOfFirstSubject = indexOfLastSubject - subjectsPerPage;
+    const currentSubjects = subjects.slice(indexOfFirstSubject, indexOfLastSubject);
 
     // Change page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     // Calculate total pages
-    const totalPages = Math.ceil(exams.length / examsPerPage);
+    const totalPages = Math.ceil(subjects.length / subjectsPerPage);
 
     useEffect(() => {
-        dispatch(fetchExams({ page: currentPage, limit: examsPerPage }));
-    }, [dispatch, currentPage]);
+        if (status === "idle") {
+            dispatch(fetchSubjects({ page: currentPage, limit: subjectsPerPage }));
+        }
+    }, [dispatch, status, currentPage]);
 
-    const handleDelete = (examId) => {
-        dispatch(deleteExam(examId));
+    const handleDelete = (subjectId) => {
+        dispatch(deleteSubject(subjectId));
         setShowConfirmation(false);
     };
 
@@ -39,8 +41,8 @@ export function ExamList() {
         setShowConfirmation(false);
     };
 
-    const handleShowConfirmation = (examId) => {
-        setDeletingExamId(examId);
+    const handleShowConfirmation = (subjectId) => {
+        setDeletingSubjectId(subjectId);
         setShowConfirmation(true);
     };
 
@@ -58,8 +60,8 @@ export function ExamList() {
 
     if (status === "loading") {
         return <div className="row justify-content-center align-content-center">
-                    <div className="spinner-border text-primary tex-center my-5" role="status"></div>
-                </div>;
+            <div className="spinner-border text-primary tex-center my-5" role="status"></div>
+        </div>;
     }
 
     return (
@@ -69,10 +71,10 @@ export function ExamList() {
                     <div className="card shadow mb-5">
                         <div className="card-header py-3">
                             <div className="row justify-content-between align-items-center">
-                                <h4 className="col text-muted">Our Exams</h4>
+                                <h4 className="col text-muted">Our Subjects</h4>
                                 <div className="col-auto text-center">
-                                    <Link to="/exams/0/edit" className="btn btn-outline-primary">
-                                        Add New Exam
+                                    <Link to="/subjects/0/edit" className="btn btn-outline-primary">
+                                        Add New Subject
                                     </Link>
                                 </div>
                             </div>
@@ -96,28 +98,22 @@ export function ExamList() {
                                         <tr>
                                             <th>#</th>
                                             <th>Title</th>
-                                            <th>Subject</th>
-                                            <th>Duration</th>
-                                            <th>No Of Qs</th>
-                                            <th>Date</th>
+                                            <th>Description</th>
                                             <th>Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {currentExams.map((exam, index) => (
-                                            <tr key={exam._id}>
-                                                <td>{indexOfFirstExam + index + 1}</td>
-                                                {/* Display number from 1 to exams.length */}
-                                                <td>{exam.examName}</td>
-                                                <td>{exam.subject ? exam.subject.subjectName : "Loading subject..."}</td>
-                                                <td>{exam.duration} minutes</td>
-                                                <td>{exam.questions.length}</td>
-                                                <td>{formatDate(exam.date)}</td>
+                                        {currentSubjects.map((subject, index) => (
+                                            <tr key={subject._id}>
+                                                <td>{indexOfFirstSubject + index + 1}</td>
+                                                {/* Display number from 1 to subjects.length */}
+                                                <td>{subject.subjectName}</td>
+                                                <td>{subject.description}</td>
                                                 <td className="w-25">
                                                     <div className="row justify-content-start align-items-start">
                                                         <div className="col-auto">
                                                             <Link
-                                                                to={`/exams/${exam._id}`}
+                                                                to={`/subjects/${subject._id}`}
                                                                 className="btn btn-outline-success p-2"
                                                             >
                                                                 Show
@@ -126,7 +122,7 @@ export function ExamList() {
 
                                                         <div className="col-auto">
                                                             <Link
-                                                                to={`/exams/${exam._id}/edit`}
+                                                                to={`/subjects/${subject._id}/edit`}
                                                                 className="btn btn-outline-warning p-2"
                                                             >
                                                                 Edit
@@ -137,7 +133,7 @@ export function ExamList() {
                                                             <button
                                                                 type="button"
                                                                 className="btn btn-outline-danger p-2"
-                                                                onClick={() => handleShowConfirmation(exam._id)}
+                                                                onClick={() => handleShowConfirmation(subject._id)}
                                                             >
                                                                 Delete
                                                             </button>
@@ -155,7 +151,7 @@ export function ExamList() {
                                         >
                                             Previous
                                         </Button>
-                                        <span>Showing {currentPage} to {totalPages} of {exams.length} entries</span>
+                                        <span>Showing {currentPage} to {totalPages} of {subjects.length} entries</span>
                                         <Button
                                             disabled={currentPage === totalPages}
                                             onClick={() => paginate(currentPage + 1)}
@@ -173,12 +169,12 @@ export function ExamList() {
                 <Modal.Header closeButton>
                     <Modal.Title>Confirm Deletion</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Are you sure you want to delete this exam?</Modal.Body>
+                <Modal.Body>Are you sure you want to delete this subject?</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseConfirmation}>
                         Cancel
                     </Button>
-                    <Button variant="danger" onClick={() => handleDelete(deletingExamId)}>
+                    <Button variant="danger" onClick={() => handleDelete(deletingSubjectId)}>
                         Delete
                     </Button>
                 </Modal.Footer>

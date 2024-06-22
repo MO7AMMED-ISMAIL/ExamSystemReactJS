@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {Button, Form} from "react-bootstrap";
-import {Link, useNavigate, useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {createExamThunk, fetchExamById, updateExamThunk} from "../../redux/examSlice";
-import {fetchSubjects} from "../../redux/subjectSlice";
+import React, { useEffect, useState } from "react";
+import { Button, Form } from "react-bootstrap";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { createExamThunk, fetchExamById, updateExamThunk } from "../../redux/examSlice";
+import { fetchSubjects } from "../../redux/subjectSlice";
 import { Trash } from 'react-bootstrap-icons';
 
 export function ExamForm() {
     const dispatch = useDispatch();
-    const {id} = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
     const exam = useSelector((state) => state.exams.exam);
     const subjects = useSelector((state) => state.subjects.subjects || []);
@@ -53,8 +53,20 @@ export function ExamForm() {
         const { name, value } = e.target;
         if (name.startsWith("options")) {
             const [index, optionIndex] = name.match(/\d+/g).map(Number);
-            const updatedQuestions = [...formData.questions];
-            updatedQuestions[index].options[optionIndex] = value;
+            const updatedQuestions = formData.questions.map((question, qIndex) => {
+                if (qIndex === index) {
+                    return {
+                        ...question,
+                        options: question.options.map((option, oIndex) => {
+                            if (oIndex === optionIndex) {
+                                return value;
+                            }
+                            return option;
+                        })
+                    };
+                }
+                return question;
+            });
             setFormData({
                 ...formData,
                 questions: updatedQuestions
@@ -72,19 +84,52 @@ export function ExamForm() {
         }
     };
 
+
     const validateForm = () => {
         let errors = {};
         let isValid = true;
 
-        if (formData.examName.length < 2) {
+        if (!formData.examName || formData.examName.length < 2) {
             errors.examName = "Exam Name must be at least 2 characters long";
             isValid = false;
         }
 
-        if (formData.description.length < 10) {
+        if (!formData.description || formData.description.length < 10) {
             errors.description = "Description must be at least 10 characters long";
             isValid = false;
         }
+
+        if (!formData.duration) {
+            errors.duration = "Duration is required";
+            isValid = false;
+        }
+
+        if (!formData.date) {
+            errors.date = "Date is required";
+            isValid = false;
+        }
+
+        if (!formData.subject) {
+            errors.subject = "Subject is required";
+            isValid = false;
+        }
+
+        formData.questions.forEach((question, index) => {
+            if (!question.questionText) {
+                errors[`questionText_${index}`] = `Question ${index+1} is required`;
+                isValid = false;
+            }
+            question.options.forEach((option, optionIndex) => {
+                if (!option) {
+                    errors[`option_${index}_${optionIndex}`] = `Option ${optionIndex} of question ${index+1} is required`;
+                    isValid = false;
+                }
+            });
+            if (!question.correctAnswer) {
+                errors[`correctAnswer_${index}`] = "Correct answer is required";
+                isValid = false;
+            }
+        });
 
         setErrors(errors);
         return isValid;
@@ -151,9 +196,13 @@ export function ExamForm() {
                                         name="examName"
                                         value={formData.examName}
                                         onChange={changeHandler}
+                                        isInvalid={!!errors.examName}
                                     />
-                                    {errors.examName &&
-                                        <Form.Text className="text-danger">{errors.examName}</Form.Text>}
+                                    {errors.examName && (
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.examName}
+                                        </Form.Control.Feedback>
+                                    )}
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formDescription">
                                     <Form.Label>Description</Form.Label>
@@ -163,8 +212,13 @@ export function ExamForm() {
                                         name="description"
                                         value={formData.description}
                                         onChange={changeHandler}
+                                        isInvalid={!!errors.description}
                                     />
-                                    {errors.description && <Form.Text className="text-danger">{errors.description}</Form.Text>}
+                                    {errors.description && (
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.description}
+                                        </Form.Control.Feedback>
+                                    )}
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="durationDate">
                                     <Form.Label>Duration</Form.Label>
@@ -174,7 +228,13 @@ export function ExamForm() {
                                         name="duration"
                                         value={formData.duration}
                                         onChange={changeHandler}
+                                        isInvalid={!!errors.duration}
                                     />
+                                    {errors.duration && (
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.duration}
+                                        </Form.Control.Feedback>
+                                    )}
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formDate">
                                     <Form.Label>Date</Form.Label>
@@ -184,9 +244,14 @@ export function ExamForm() {
                                         name="date"
                                         value={formData.date}
                                         onChange={changeHandler}
+                                        isInvalid={!!errors.date}
                                     />
+                                    {errors.date && (
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.date}
+                                        </Form.Control.Feedback>
+                                    )}
                                 </Form.Group>
-
                                 <Form.Group className="mb-3" controlId="formSubject">
                                     <Form.Label>Subject</Form.Label>
                                     <Form.Control
@@ -194,6 +259,7 @@ export function ExamForm() {
                                         name="subject"
                                         value={formData.subject}
                                         onChange={changeHandler}
+                                        isInvalid={!!errors.subject}
                                     >
                                         {subjects.length > 0 ? (
                                             subjects.map((subject) => (
@@ -205,8 +271,12 @@ export function ExamForm() {
                                             <option>No subjects available</option>
                                         )}
                                     </Form.Control>
+                                    {errors.subject && (
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.subject}
+                                        </Form.Control.Feedback>
+                                    )}
                                 </Form.Group>
-
                                 <Form.Group className="mb-3">
                                     <Form.Label>Questions</Form.Label>
                                     {formData.questions.map((question, index) => (
@@ -218,33 +288,51 @@ export function ExamForm() {
                                                     onClick={() => deleteQuestion(index)}
                                                     className="align-self-start pb-0 pt-3"
                                                 >
-                                                    <Trash/>
+                                                    <Trash />
                                                 </Button>
                                             </div>
-                                            <Form.Control className='mb-3'
-                                                          placeholder="Enter question text"
-                                                          type="text"
-                                                          name={`questionText`}
-                                                          value={question.questionText}
-                                                          onChange={(e) => questionChangeHandler(index, e)}
+                                            <Form.Control
+                                                className="mb-3"
+                                                placeholder="Enter question text"
+                                                type="text"
+                                                name="questionText"
+                                                value={question.questionText}
+                                                onChange={(e) => questionChangeHandler(index, e)}
+                                                isInvalid={!!errors[`questionText_${index}`]}
                                             />
+                                            {errors[`questionText_${index}`] && (
+                                                <Form.Control.Feedback type="invalid">
+                                                    {errors[`questionText_${index}`]}
+                                                </Form.Control.Feedback>
+                                            )}
                                             <Form.Label>Options</Form.Label>
                                             {question.options.map((option, optionIndex) => (
-                                                <Form.Control className="mb-3"
-                                                              key={optionIndex}
-                                                              placeholder={`Option ${optionIndex + 1}`}
-                                                              type="text"
-                                                              name={`options[${index}][${optionIndex}]`}
-                                                              value={option}
-                                                              onChange={(e) => changeHandler(e)}
+                                                <Form.Control
+                                                    className="mb-3"
+                                                    key={optionIndex}
+                                                    placeholder={`Option ${optionIndex + 1}`}
+                                                    type="text"
+                                                    name={`options[${index}][${optionIndex}]`}
+                                                    value={option}
+                                                    onChange={changeHandler}
+                                                    isInvalid={!!errors[`option_${index}_${optionIndex}`]}
                                                 />
                                             ))}
+                                            {question.options.map((option, optionIndex) => (
+                                                errors[`option_${index}_${optionIndex}`] && (
+                                                    <Form.Control.Feedback key={optionIndex} type="invalid">
+                                                        {errors[`option_${index}_${optionIndex}`]}
+                                                    </Form.Control.Feedback>
+                                                )
+                                            ))}
                                             <Form.Label>Correct Answer</Form.Label>
-                                            <Form.Control className="mb-3"
-                                                          as="select"
-                                                          name={`correctAnswer`}
-                                                          value={question.correctAnswer}
-                                                          onChange={(e) => questionChangeHandler(index, e)}
+                                            <Form.Control
+                                                className="mb-3"
+                                                as="select"
+                                                name="correctAnswer"
+                                                value={question.correctAnswer}
+                                                onChange={(e) => questionChangeHandler(index, e)}
+                                                isInvalid={!!errors[`correctAnswer_${index}`]}
                                             >
                                                 {question.options.map((option, optionIndex) => (
                                                     <option key={optionIndex} value={option}>
@@ -252,13 +340,17 @@ export function ExamForm() {
                                                     </option>
                                                 ))}
                                             </Form.Control>
+                                            {errors[`correctAnswer_${index}`] && (
+                                                <Form.Control.Feedback type="invalid">
+                                                    {errors[`correctAnswer_${index}`]}
+                                                </Form.Control.Feedback>
+                                            )}
                                         </div>
                                     ))}
                                     <Button variant="info" onClick={addQuestion} className="mt-3">
                                         Add Question
                                     </Button>
                                 </Form.Group>
-
                                 <Button variant="dark" type="submit">
                                     Submit
                                 </Button>

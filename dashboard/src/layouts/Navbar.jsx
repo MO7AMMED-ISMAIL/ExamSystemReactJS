@@ -23,7 +23,7 @@ const CustomNavbar = () => {
     return (
         <>
             <Navbar expand="lg" bg="white" className="shadow rounded p-3">
-                <Navbar.Brand href="/">
+                <Navbar.Brand >
                     <img
                         src="https://themewagon.github.io/alazea/img/bg-img/10.jpg"
                         alt="Logo"
@@ -36,6 +36,10 @@ const CustomNavbar = () => {
                 <Navbar.Toggle aria-controls="navbar" />
                 <Navbar.Collapse id="navbar">
                     <Nav className="me-auto mb-2 mb-lg-0">
+                        <NavLink className={({isActive}) => {
+                            return isActive ? 'text-primary nav-link' : "nav-link"
+                        }} to="/">Home</NavLink>
+
                         <NavLink className={({isActive}) => {
                             return isActive ? 'text-primary nav-link' : "nav-link"
                         }} to="/students">Students</NavLink>

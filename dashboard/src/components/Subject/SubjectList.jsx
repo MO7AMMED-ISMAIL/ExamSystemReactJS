@@ -65,7 +65,7 @@ export function SubjectList() {
     }
 
     return (
-        <div className="mx- mt-5">
+        <div className="mx-1 mt-5">
             <div className="row justify-content-center align-items-center">
                 <div className="col">
                     <div className="card shadow mb-5">

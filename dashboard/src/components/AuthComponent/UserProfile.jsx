@@ -56,7 +56,7 @@ function UserProfile() {
             {
                 error && <div className='alert alert-danger'>{error}</div>
             }
-            <div className='card w-full max-w-md mx-auto mt-3' style={{ width: '30rem' }}>
+            <div className='card w-full max-w-md mx-1auto mt-3' style={{ width: '30rem' }}>
                 <div className='card-title text-center mt-3'>
                     <h2>User Profile</h2>
                 </div>

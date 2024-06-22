@@ -17,6 +17,7 @@ import {SubjectDetails} from "./components/Subject/SubjectDetails";
 import AddStudent from "./components/Student/AddStudent";
 
 
+import {HomePage} from "./components/HomePage";
 
 function App() {
     const router = createBrowserRouter(
@@ -27,6 +28,7 @@ function App() {
                     <SharedLayout />
                 </PrivateRoute>
                 }>
+                    <Route path="" element={<HomePage/>}/>
                     <Route path="profile" element={<UserProfile/>}/>
                     <Route path="students" element={<AllStudent/>}/>
                     <Route path="students/add" element={<AddStudent/>}/>
